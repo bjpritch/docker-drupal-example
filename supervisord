@@ -1,0 +1,28 @@
+[supervisord]
+logfile=/tmp/supervisord.log
+pidfile=/tmp/supervisord.pid
+nodaemon=true
+
+[inet_http_server]
+port=127.0.0.1:9001
+#username=user
+
+[supervisorctl]
+serverurl=http://127.0.0.1:9001
+
+[program:httpd]
+command=/usr/sbin/httpd -DFOREGROUND
+redirect_stderr=true
+process_name=httpd
+
+[program:memcached]
+command=/usr/bin/memcached -p 11211 -u memcached
+autostart=true
+autorestart=true
+startsecs=2
+user=memcached
+
+[program:rsyslog]
+command=/usr/sbin/rsyslogd -n -c3
+startsecs = 5
+stopwaitsecs = 5
